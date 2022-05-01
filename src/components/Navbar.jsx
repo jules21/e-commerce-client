@@ -12,11 +12,15 @@ function Navbar() {
     <>
     <ul className='navbar'>
       <li>
-        <Link to="#" onClick={() => logout()}>Logout</Link>
+        <Link to="/topups" >Topups</Link>
       </li>
+      <li>
+        <Link to="/purchases" >Purchases</Link></li>
+        <li>
+        <Link to="#" onClick={() => logout()}>Logout</Link></li>
     </ul>
     </>
   )
 }
 
-export default Navbar
+export default Navbar;

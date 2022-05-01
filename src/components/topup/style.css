@@ -1,0 +1,6 @@
+.topupField {
+    width: 500px;
+    color: red;
+    display: flex;
+    height: 40px;
+}
