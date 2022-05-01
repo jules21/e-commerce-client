@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Layout from '../Layout'
 
 function Login() {
   const [email, setEmail] = React.useState('')
@@ -12,11 +13,17 @@ function Login() {
         password: password,
       })
       .then((response) => {
-        console.log(response)
+        console.log(response.data)
+        if(response?.data?.token) {
+          localStorage.setItem('token', response.data.token)
+          window.location.href = '/';
+        }
+      }).catch((e) => {
+        console.log(" err > ", e?.response?.data);
       })
   }
   return (
-    <div>
+    <Layout>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -37,7 +44,7 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-    </div>
+    </Layout>
   )
 }
 

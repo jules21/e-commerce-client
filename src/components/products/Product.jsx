@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProductItem from './ProductItem'
 import axios from 'axios';
+import Layout from '../Layout';
 
 
 function Product() {
@@ -16,11 +17,12 @@ function Product() {
 }, []);
 
   return (
-    <div>
+    <Layout>
+      
         {products.map(product => (
             <ProductItem key={product.id} product={product} />
         ))}
-    </div>
+    </Layout>
   )
 }
 
