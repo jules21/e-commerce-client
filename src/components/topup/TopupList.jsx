@@ -46,6 +46,7 @@ export default function TopupList() {
         ])
       }).catch((e) => {
         console.log(" err post > ", e?.response?.data);
+        window.alert(e?.response?.data?.message);
       })
   }
 
@@ -60,6 +61,7 @@ export default function TopupList() {
               placeholder="Enter amount"
               value={amount}
               onChange={(e) => setAmount(e?.target?.value)}
+              required="true"
             />
             <Button variant="primary" type="submit" onClick={handleSubmit}>
               Topup
@@ -84,7 +86,7 @@ export default function TopupList() {
                           <td>{i + 1}</td>
                           <td>{topup?.account_id}</td>
                           <td>{topup?.amount}</td>
-                          <td>{topup?.created_at}</td>
+                          <td>{new Date(topup?.created_at).toLocaleString()}</td>
                         </tr>
                       )
                     

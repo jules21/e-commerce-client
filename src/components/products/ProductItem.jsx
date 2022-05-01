@@ -11,6 +11,11 @@ function ProductItem({ product }) {
   const toggleShow = () => setShow(!show);
 
   const buyItem = () => {
+    const token = localStorage.getItem('token');
+    //redirect to login if no token
+    if (!token) {
+      window.location.href = '/login';
+    }
     axios
       .get(`${server}/api/products/${product?.id}/buy`, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
@@ -37,7 +42,9 @@ function ProductItem({ product }) {
           <Card.Title>{product.name}</Card.Title>
           <Card.Text>{product.description}</Card.Text>
           <Card.Link onClick={() => buyItem()}>Buy Now</Card.Link>
-          <Card.Link href="#">${product.price} </Card.Link>
+          <Card.Link href="#">
+            <span style={{textDecoration:'line-through', paddingRight:'1.3rem'}}>${product.price}</span>
+             ${(1 - (product.discount/100)) * product.price} </Card.Link>
         </Card.Body>
       </Card>
     </>

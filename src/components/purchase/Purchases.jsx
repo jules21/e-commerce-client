@@ -44,7 +44,7 @@ export default function Purchases() {
                       <td>{purchases?.product_id}</td>
                       <td>{purchases?.amount}</td>
                       <td>{purchases?.status}</td>
-                      <td>{purchases?.created_at}</td>
+                      <td>{new Date(purchases?.created_at).toLocaleString()}</td>
                     </tr>
                   ))}
                 </>

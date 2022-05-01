@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Layout from '../Layout'
 import {server} from '../../config/constants'
+import { Link } from 'react-router-dom'
 
 function Register() {
   const [name, setName] = useState('')
@@ -20,17 +21,19 @@ function Register() {
       .then((response) => {
         if(response?.data?.token) {
           localStorage.setItem('token', response.data.token)
-          localStorage.setItem('accountId', response.data.accountId)
+          localStorage.setItem('accountId', response.data.user.accountId)
           window.location.href = '/';
         }
       }).catch((e) => {
         console.log(" err > ", e?.response?.data);
+        window.alert(e?.response?.data?.message);
       })
   }
   return (
     <Layout>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="">Name: </label><br />
         <input
           type="text"
           name="name"
@@ -39,6 +42,8 @@ function Register() {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        <br /><br />
+        <label htmlFor="">Email: </label><br />
         <input
           type="email"
           name="email"
@@ -47,6 +52,8 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <br /><br />
+        <label htmlFor="">Password: </label><br />
         <input
           type="password"
           name="password"
@@ -55,6 +62,8 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <br /><br />
+        <label htmlFor="passwordConfirmation">Confirm Password</label> <br />
           <input
           type="password"
           name="password_confirmation"
@@ -63,7 +72,11 @@ function Register() {
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           required
         />
+        <br /><br />
         <button type="submit">Register</button>
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </form>
     </Layout>
   )

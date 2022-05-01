@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Layout from '../Layout'
 import {server} from '../../config/constants'
+import { Link } from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = React.useState('')
@@ -21,12 +22,14 @@ function Login() {
         }
       }).catch((e) => {
         console.log(" err > ", e?.response?.data);
+        window.alert(e?.response?.data?.error);
       })
   }
   return (
     <Layout>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email:</label> <br />
         <input
           type="email"
           name="email"
@@ -35,6 +38,8 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <br /><br />
+        <label htmlFor="password">Password</label> <br />
         <input
           type="password"
           name="password"
@@ -43,7 +48,11 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <br /> <br />
         <button type="submit">Login</button>
+        <p>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
       </form>
     </Layout>
   )
