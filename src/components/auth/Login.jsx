@@ -1,19 +1,20 @@
 import React from 'react'
 import axios from 'axios'
 import Layout from '../Layout'
+import {server} from '../../config/constants'
 
 function Login() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post('http://127.0.0.1:8000/api/login', {
+      .post(`${server}/api/login`, {
         email: email,
         password: password,
       })
       .then((response) => {
-        console.log(response.data)
         if(response?.data?.token) {
           localStorage.setItem('token', response.data.token)
           window.location.href = '/';

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ProductItem from './ProductItem'
 import axios from 'axios';
 import Layout from '../Layout';
+import {server} from '../../config/constants'
 
 
 function Product() {
@@ -9,7 +10,7 @@ function Product() {
   const [products,setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/products')
+    axios.get(`${server}/api/products`)
     .then(response => {
         setProducts(response.data)
     })

@@ -1,6 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, Toast } from 'react-bootstrap'
+import { server } from '../../config/constants';
+
 function ProductItem({ product }) {
   const [show, setShow] = useState(false);
   const [error, setError] = useState('');
@@ -10,11 +12,11 @@ function ProductItem({ product }) {
 
   const buyItem = () => {
     axios
-      .get('http://127.0.0.1:8000/api/products/1/buy', {
+      .get(`${server}/api/products/${product?.id}/buy`, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
       })
       .then((response) => {
-        setMessage("Succesuful");
+        setMessage("Product Bought Successfully!");
         setShow(true);
       })
       .catch((e) => {
@@ -30,7 +32,7 @@ function ProductItem({ product }) {
       </Toast>
 
       <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={`http://127.0.0.1:8000` + product.image} />
+        <Card.Img variant="top" src={`${server}` + product.image} />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Card.Text>{product.description}</Card.Text>

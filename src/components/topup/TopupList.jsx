@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Form, Table } from 'react-bootstrap'
+import { server } from '../../config/constants'
 import Layout from '../Layout'
 import './style.css'
 
@@ -8,25 +9,33 @@ export default function TopupList() {
   const [topups, setTopups] = useState([])
   const [amount, setAmount] = useState('')
   let total = 0;
+  const accountId = localStorage.getItem('accountId');
 
 
   useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/api/accounts/1/topups', {
-        headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
-    })
-      .then((response) => {
-        setTopups(response.data)
-      })
-      .catch((e) => {
-        console.log(' err get > ', e?.response?.data)
-      })
+      getTopups();
   }, [])
+
+
+
+
+  const getTopups = () => {
+    axios
+    .get(`${server}/api/accounts/${accountId}/topups`, {
+      headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
+  })
+    .then((response) => {
+      setTopups(response.data)
+    })
+    .catch((e) => {
+      console.log(' err get > ', e?.response?.data)
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post('http://127.0.0.1:8000/api/accounts/1/topups', { amount }, {
+      .post(`${server}/api/accounts/${accountId}/topups`, { amount }, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
     })
       .then((response) => {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Card, Form, Table } from 'react-bootstrap'
+import { Card, Table } from 'react-bootstrap'
+import { server } from '../../config/constants'
 import Layout from '../Layout'
 
 export default function Purchases() {
@@ -8,7 +9,7 @@ export default function Purchases() {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/api/purchases', {
+      .get(`${server}/api/my-purchases`, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
       })
       .then((response) => {

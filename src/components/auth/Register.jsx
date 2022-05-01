@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import Layout from '../Layout'
+import {server} from '../../config/constants'
 
 function Register() {
   const [name, setName] = useState('')
@@ -11,16 +11,16 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post('http://127.0.0.1:8000/api/register', {
+      .post(`${server}/api/register`, {
         name: name,
         email: email,
         password: password,
         password_confirmation: passwordConfirmation,
       })
       .then((response) => {
-        console.log(response.data)
         if(response?.data?.token) {
           localStorage.setItem('token', response.data.token)
+          localStorage.setItem('accountId', response.data.accountId)
           window.location.href = '/';
         }
       }).catch((e) => {
