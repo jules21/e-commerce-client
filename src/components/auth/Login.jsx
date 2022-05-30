@@ -3,6 +3,7 @@ import axios from 'axios'
 import Layout from '../Layout'
 import {server} from '../../config/constants'
 import { Link } from 'react-router-dom'
+import {Spinner, Button} from "react-bootstrap";
 
 function Login() {
   const [email, setEmail] = React.useState('')
@@ -10,6 +11,10 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    //show spinner
+    const spinner = document.getElementById('spinner')
+    spinner.style.display = 'inline-block'
+    //send request to server
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
         email: email,
@@ -49,7 +54,15 @@ function Login() {
           required
         />
         <br /> <br />
-        <button type="submit">Login</button>
+        <Button type="submit" variant="primary">
+          <Spinner style={{"display":"none"}}
+              id='spinner'
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"></Spinner>
+          Login</Button>
         <p>
           Don't have an account? <Link to="/register">Register</Link>
         </p>

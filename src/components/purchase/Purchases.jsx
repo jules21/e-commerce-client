@@ -28,7 +28,8 @@ export default function Purchases() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Image</th>
                 <th>Amount</th>
                 <th>Status</th>
                 <th>Date</th>
@@ -40,7 +41,10 @@ export default function Purchases() {
                   {purchasess?.map((purchases, i) => (
                     <tr key={i?.toString()}>
                       <td>{i + 1}</td>
-                      <td>{purchases?.product_id}</td>
+                      <td>
+                        <img src={`${process.env.REACT_APP_SERVER_URL}` + purchases?.product?.image} style={{objectFit: "cover",height: "150px", width: "100%"}} />
+                      </td>
+                      <td>{purchases?.product?.name}</td>
                       <td>{purchases?.amount}</td>
                       <td>{purchases?.status}</td>
                       <td>{new Date(purchases?.created_at).toLocaleString()}</td>

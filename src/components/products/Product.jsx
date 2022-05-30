@@ -26,8 +26,8 @@ function Product() {
         </div>
         <div className="row">
             {products.map(product => (
-                <div className="col-md-4 col-lg-3 col-sm-6 my-2">
-                    <ProductItem key={product.id} product={product} />
+                <div className="col-md-4 col-lg-3 col-sm-6 my-2" key={product.id}>
+                    <ProductItem product={product} />
                 </div>
             ))}
         </div>

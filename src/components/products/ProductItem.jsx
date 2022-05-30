@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Card, Toast } from 'react-bootstrap'
+import {Card, Spinner, Toast} from 'react-bootstrap'
 
 function ProductItem({ product }) {
   const [show, setShow] = useState(false);
@@ -10,6 +10,9 @@ function ProductItem({ product }) {
   const toggleShow = () => setShow(!show);
 
   const buyItem = () => {
+    //show spinner
+    const spinner = document.getElementById('spinner-'+product.id);
+    spinner.style.display = 'inline-block'
     const token = localStorage.getItem('token');
     //redirect to login if no token
     if (!token) {
@@ -22,10 +25,12 @@ function ProductItem({ product }) {
       .then((response) => {
         setMessage("Product Bought Successfully!");
         setShow(true);
+        spinner.style.display = 'none'
       })
       .catch((e) => {
         setError(e?.response?.data?.error)
         setShow(true);
+        spinner.style.display = 'none'
       })
   }
 
@@ -40,7 +45,15 @@ function ProductItem({ product }) {
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Card.Text>{product.description}</Card.Text>
-          <Card.Link onClick={() => buyItem()}>Buy Now</Card.Link>
+          <Card.Link onClick={() => buyItem()}>
+            <Spinner style={{"display":"none"}}
+                     id={`spinner-${product.id}`}
+                     as="span"
+                     animation="border"
+                     size="sm"
+                     role="status"
+                     aria-hidden="true"></Spinner>
+            Buy Now</Card.Link>
           <Card.Link href="#">
             <span style={{textDecoration:'line-through', paddingRight:'1.3rem'}}>${product.price}</span>
              ${(1 - (product.discount/100)) * product.price} </Card.Link>

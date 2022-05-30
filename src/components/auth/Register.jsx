@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Layout from '../Layout'
 import { Link } from 'react-router-dom'
+import {Spinner,Button} from "react-bootstrap";
 
 function Register() {
   const [name, setName] = useState('')
@@ -10,6 +11,10 @@ function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const handleSubmit = (e) => {
     e.preventDefault()
+    //show spinner
+    const spinner = document.getElementById('spinner')
+    spinner.style.display = 'inline-block'
+    //send request to server
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/register`, {
         name: name,
@@ -72,7 +77,15 @@ function Register() {
           required
         />
         <br /><br />
-        <button type="submit">Register</button>
+        <Button type="submit" variant="primary">
+          <Spinner style={{"display":"none"}}
+                   id='spinner'
+                   as="span"
+                   animation="border"
+                   size="sm"
+                   role="status"
+                   aria-hidden="true"></Spinner>
+          Register</Button>
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>

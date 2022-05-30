@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Form, Table } from 'react-bootstrap'
+import {Button, Card, Form, Spinner, Table} from 'react-bootstrap'
 import Layout from '../Layout'
 import './style.css'
 
@@ -33,19 +33,28 @@ export default function TopupList() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    //show spinner
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'inline-block';
+    //send request
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/accounts/${accountId}/topups`, { amount }, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
     })
       .then((response) => {
         console.log(response.data)
+        //hide spinner
+        spinner.style.display = 'none';
         setTopups([
             ...topups,
             response?.data
         ])
       }).catch((e) => {
+        //hide spinner
+        spinner.style.display = 'none';
         console.log(" err post > ", e?.response?.data);
         window.alert(e?.response?.data?.message);
+
       })
   }
 
@@ -54,15 +63,25 @@ export default function TopupList() {
       <Card>
         <Card.Header as="h5">Top up History</Card.Header>
         <Card.Body>
+          <div className="my-2">
+            My balance: ${topups[0]?.account?.amount ?? 0}
+          </div>
           <div className="topupField">
             <Form.Control
               type="number"
               placeholder="Enter amount"
               value={amount}
               onChange={(e) => setAmount(e?.target?.value)}
-              required="true"
+              required={true}
             />
             <Button variant="primary" type="submit" onClick={handleSubmit}>
+              <Spinner style={{"display":"none", marginBottom:"1rem"}}
+                       id='spinner'
+                       as="span"
+                       animation="border"
+                       size="sm"
+                       role="status"
+                       aria-hidden="true"></Spinner>
               Topup
             </Button>
           </div>
@@ -84,7 +103,7 @@ export default function TopupList() {
                         <tr key={i?.toString()}>
                           <td>{i + 1}</td>
                           <td>{topup?.account_id}</td>
-                          <td>{topup?.amount}</td>
+                          <td>${topup?.amount}</td>
                           <td>{new Date(topup?.created_at).toLocaleString()}</td>
                         </tr>
                       )
@@ -99,7 +118,7 @@ export default function TopupList() {
               {topups?.length > 0 ? <tr>
                   <td>#</td>
                   <td>Total</td>
-                  <td colSpan={2}>{total}</td>
+                  <td colSpan={2}>${total}</td>
               </tr> : null}
             </tbody>
           </Table>

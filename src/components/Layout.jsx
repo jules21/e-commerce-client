@@ -11,7 +11,6 @@ function Layout({children}) {
   }
   return (
       <>
-
         <Navbar />
         <div style={layoutSyles}>
         {children}
