@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Layout from '../Layout'
-import {server} from '../../config/constants'
 import { Link } from 'react-router-dom'
 
 function Register() {
@@ -12,7 +11,7 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post(`${server}/api/register`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/register`, {
         name: name,
         email: email,
         password: password,

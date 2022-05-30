@@ -20,9 +20,9 @@ npm install
 
 ### Configuration:
 
-config server in config/constants by providing backend url
+config server in .env by providing backend url
 ```dotenv
-export const server = "http://127.0.0.1:8000"
+REACT_APP_SERVER_URL = "YOUR_SERVER_URL_HERE"
 ```
 
 ### Type the following command to run app

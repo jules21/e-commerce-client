@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Form, Table } from 'react-bootstrap'
-import { server } from '../../config/constants'
 import Layout from '../Layout'
 import './style.css'
 
@@ -21,7 +20,7 @@ export default function TopupList() {
 
   const getTopups = () => {
     axios
-    .get(`${server}/api/accounts/${accountId}/topups`, {
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/accounts/${accountId}/topups`, {
       headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
   })
     .then((response) => {
@@ -35,7 +34,7 @@ export default function TopupList() {
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post(`${server}/api/accounts/${accountId}/topups`, { amount }, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/accounts/${accountId}/topups`, { amount }, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
     })
       .then((response) => {

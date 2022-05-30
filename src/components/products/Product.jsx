@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import ProductItem from './ProductItem'
 import axios from 'axios';
 import Layout from '../Layout';
-import {server} from '../../config/constants'
 
 
 function Product() {
@@ -10,7 +9,7 @@ function Product() {
   const [products,setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`${server}/api/products`)
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/api/products`)
     .then(response => {
         setProducts(response.data)
     })
@@ -19,10 +18,20 @@ function Product() {
 
   return (
     <Layout>
-      
-        {products.map(product => (
-            <ProductItem key={product.id} product={product} />
-        ))}
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1>Products</h1>
+          </div>
+        </div>
+        <div className="row">
+            {products.map(product => (
+                <div className="col-md-4 col-lg-3 col-sm-6 my-2">
+                    <ProductItem key={product.id} product={product} />
+                </div>
+            ))}
+        </div>
+      </div>
     </Layout>
   )
 }

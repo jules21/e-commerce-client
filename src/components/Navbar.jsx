@@ -12,6 +12,7 @@ function Navbar() {
       listStyle:'none',
       display:'flex',
       justifyContent:'space-between',
+      margin:'1rem',
   }
 
   return (

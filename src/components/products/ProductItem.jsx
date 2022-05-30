@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Card, Toast } from 'react-bootstrap'
-import { server } from '../../config/constants';
 
 function ProductItem({ product }) {
   const [show, setShow] = useState(false);
@@ -17,7 +16,7 @@ function ProductItem({ product }) {
       window.location.href = '/login';
     }
     axios
-      .get(`${server}/api/products/${product?.id}/buy`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/products/${product?.id}/buy`, {
         headers: { Authorization: `Bearer ${localStorage?.getItem('token')}` },
       })
       .then((response) => {
@@ -37,7 +36,7 @@ function ProductItem({ product }) {
       </Toast>
 
       <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={`${server}` + product.image} />
+        <Card.Img variant="top" src={`${process.env.REACT_APP_SERVER_URL}` + product.image} className="card-img-top" style={{objectFit: "cover",height: "150px", width: "100%"}} />
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Card.Text>{product.description}</Card.Text>

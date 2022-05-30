@@ -11,7 +11,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post(`${server}/api/login`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
         email: email,
         password: password,
       })
@@ -26,7 +26,7 @@ function Login() {
       })
   }
   return (
-    <Layout>
+    <Layout style={{alignItems:"center", justifyContent:"center"}}>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label> <br />
